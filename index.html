@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% block title %}<title>Local Library</title>{% endblock %}
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+ 
+</head>
+
+<script type="text/javascript"> 
+$(document).ready(function() {
+	var username;
+	$("#name").on('change', function(){
+		if($('#name').val()!="")
+		{
+			username = $(this).val();
+		}
+		console.log(username);
+		$.ajax({
+			url: 'data/getdata',
+			data: {
+			'name': username
+			},
+			dataType: 'json',
+			success: function (data) {
+				if(data.height)
+				{
+				$('#height').val(data.height);
+				$('#weight').val(data.weight);
+				}
+			}
+			});
+		});
+	});
+</script>
+
+
+<body>
+  {% block sidebar %}<!-- insert default navigation text for every page -->{% endblock %}
+  {% block content %}<!-- default content text (typically empty) -->{% endblock %}
+
+    Name: <input type="text" id="name"><br>
+	Height: <input type="text" id="height"><br>
+	weight: <input type="text" id="weight"><br>
+
+  
+</body>
+</html>
